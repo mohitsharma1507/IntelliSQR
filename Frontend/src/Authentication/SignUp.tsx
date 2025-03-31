@@ -7,7 +7,6 @@ import { z } from "zod";
 import { ToastContainer, toast } from "react-toastify";
 import Signpng from "../assets/logo3.png";
 
-
 const signUpSchema = z.object({
   email: z.string().email("Invalid email address"),
   username: z.string().min(3, "Username must be at least 3 characters"),
@@ -18,8 +17,7 @@ type RegisterFormInputs = z.infer<typeof signUpSchema>;
 
 function SignUp() {
   const navigate = useNavigate();
-  
- 
+
   const {
     register,
     handleSubmit,
@@ -47,9 +45,13 @@ function SignUp() {
       } else {
         handleError(message);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      handleError("Registration failed. Please try again.");
+      if (error.response && error.response.data) {
+        handleError(error.response.data.message || "Registration failed. Please try again.");
+      } else {
+        handleError("Registration failed. Please try again.");
+      }
     }
   };
 

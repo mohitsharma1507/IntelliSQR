@@ -50,7 +50,7 @@ function Login(){
       }
     } catch (error) {
       console.error(error);
-      handleError("Something went wrong. Please try again.");
+      handleError("User not Found .Try Again");
     }
   };
 
